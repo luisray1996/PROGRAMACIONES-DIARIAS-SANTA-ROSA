@@ -1,0 +1,16 @@
+FUNDO SANTA ROSA — V15 SUPABASE
+
+1. Extraer todos los archivos juntos.
+2. Abrir index.html con Chrome y disponer de conexión a internet.
+3. Iniciar sesión con un usuario creado en Supabase Authentication > Users.
+4. Guardar una OT; el botón Guardar escribe en la tabla programaciones_diarias.
+5. Cambiar fecha/turno consulta Supabase.
+
+IMPORTANTE: El historial y los reportes heredados de V14 aún leen datos locales del navegador.
+Las programaciones nuevas se guardan en Supabase y se consultan por fecha/turno.
+Cada usuario ve solo sus propias programaciones por las políticas RLS instaladas.
+Los usuarios no comparten programaciones entre sí todavía.
+
+El navegador debe tener internet para cargar la biblioteca supabase-js desde jsDelivr.
+Si Chrome bloquea solicitudes desde file://, utiliza VS Code Live Server o python -m http.server.
+No poner nunca claves secretas o service_role en estos archivos.

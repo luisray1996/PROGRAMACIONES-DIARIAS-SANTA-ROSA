@@ -1,0 +1,11 @@
+FUNDO SANTA ROSA V17 - MOVER FECHA DE PROGRAMACIÓN
+
+1. Extrae la carpeta completa y abre index.html con Live Server.
+2. Inicia sesión y entra a Historial.
+3. Junto a la programación pulsa «Cambiar fecha».
+4. Escribe una fecha válida AAAA-MM-DD y confirma.
+5. La operación actualiza la fecha del mismo registro en Supabase: no crea duplicados.
+6. Si ya existe una programación de ese usuario y turno en la fecha destino, no la sobrescribe.
+
+IMPORTANTE: guarda las modificaciones pendientes antes de cambiar la fecha. Descarga un respaldo JSON antes de la primera prueba.
+No requiere SQL adicional si la tabla programaciones_diarias y sus políticas RLS están como se configuraron.

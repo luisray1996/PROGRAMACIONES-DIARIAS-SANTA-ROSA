@@ -1,0 +1,282 @@
+:root{font-family:Arial,Helvetica,sans-serif;color:#091a36;background:#f2f5fa}*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer;border:1px solid #17365e;border-radius:6px;padding:10px 14px;background:white;color:#092552;font-weight:700}button:hover{filter:brightness(.94)}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #6ab3ff}.top{height:70px;background:linear-gradient(105deg,#062657,#08366f);color:white;display:flex;align-items:center;padding:0 28px;gap:28px}.brand{display:flex;align-items:center;font-size:19px;line-height:1.02;font-weight:900;min-width:240px}.leaf{font-size:43px;margin-right:10px}.top-title{border-left:2px solid #d2e2fa;padding-left:28px;font-size:clamp(19px,2vw,32px);font-weight:900;letter-spacing:.4px;flex:1}.user{white-space:nowrap;font-weight:bold}.shell{display:flex;min-height:calc(100vh - 70px)}.side{width:218px;flex:none;background:linear-gradient(#0a3269,#06214a);padding:14px 5px}.side button{width:100%;border:0;background:transparent;color:#f5f9ff;text-align:left;font-size:15px;padding:15px 14px}.side button.active,.side button:hover{background:#1767ce;color:#fff}main{min-width:0;flex:1;padding:14px 15px 40px}.toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}.selectors{display:flex;gap:12px;flex-wrap:wrap}.selectors label{background:#edf4ff;border:1px solid #b6c9e0;padding:8px;border-radius:7px;font-weight:bold}.selectors input,.selectors select{border:1px solid #8196b4;padding:7px;border-radius:4px;background:white}.selectors select{background:#062c62;color:white}.actions{display:flex;gap:7px;flex-wrap:wrap}.green{background:#078327;color:white;border-color:#078327}.blue{background:#0755bd;color:white;border-color:#0755bd}.red{background:#df2028;color:white;border-color:#df2028}.stats{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:12px;margin:13px 0}.stats article{border:2px solid #b8c2d0;background:white;border-radius:7px;display:flex;align-items:center;justify-content:center;gap:13px;padding:13px 6px;text-align:center;min-height:86px;font-size:13px;font-weight:bold}.stats article span{font-size:31px;color:#0755bd}.stats strong{display:block;font-size:24px;margin-top:7px}.strip{display:flex;justify-content:space-around;gap:4px;background:#c8e4fc;border:2px solid #062a5e;border-radius:7px;text-align:center;font-weight:900;padding:10px;margin:12px 0}.strip span{flex:1;border-right:1px solid #28405d}.strip span:last-child{border:0}.table-title{text-align:center;background:#d8f8dc;border:2px solid #0a1d31;border-bottom:0;border-radius:7px 7px 0 0;padding:10px;font-size:23px;font-weight:900}.table-scroll{overflow:auto;border:2px solid #0a1d31;border-radius:0 0 7px 7px;background:white}#schedule{border-collapse:collapse;width:100%;min-width:1700px;font-size:12px;text-align:center}#schedule th,#schedule td{border:1px solid #101820;padding:7px 5px;vertical-align:middle}#schedule th{background:#c2e5f7;font-weight:900}#schedule tbody tr:hover td:not(.stage){background:#f1f8ff}#schedule td.stage{font-weight:900;width:110px}.stage-formacion{background:#03c64d}.stage-post-cosecha{background:#ff802c}.stage-produccion{background:#fff500}.stage-otros{background:#d6d6e3}.subtotal td{background:#d5f6bf;font-weight:900}.grand td{background:#bde0fa;font-size:16px;font-weight:900}.no-data td{padding:32px!important;color:#526278}.row-actions{white-space:nowrap}.row-actions button{padding:5px 7px;font-size:11px;margin:2px}.under{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:13px}.under small{color:#526278}.under button{font-size:13px}#notice{color:#07552d;font-weight:bold;margin-top:6px}#notice:empty{display:none}dialog{border:2px solid #11366c;border-radius:12px;padding:0;max-width:min(1000px,96vw);width:100%;box-shadow:0 20px 70px #0006}dialog::backdrop{background:#06182db8}#editForm{padding:22px;max-height:90vh;overflow:auto}.modal-head{display:flex;justify-content:space-between;align-items:center}.modal-head h2{margin:0 0 16px}.fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.fields label{display:flex;flex-direction:column;font-size:13px;font-weight:bold;gap:5px}.fields input,.fields select,.product-table input{border:1px solid #9aabc1;border-radius:4px;padding:9px;width:100%;min-width:0}.product-scroll{overflow:auto}.product-table{width:100%;border-collapse:collapse;min-width:750px}.product-table th,.product-table td{border:1px solid #9ca9b9;padding:5px}.product-table th{background:#d4e8f9}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}#other{background:white;border:2px solid #b9c7d9;border-radius:8px;padding:20px}#other h2{margin-top:0}.history-table{border-collapse:collapse;width:100%}.history-table th,.history-table td{border:1px solid #9aaac0;padding:10px;text-align:left}.history-table th{background:#c2e5f7}.history-table button{margin:2px}.history-wrap{overflow:auto}.hint{color:#53647c}.metric{font-size:20px;font-weight:bold}.badge{display:inline-block;background:#e8f3ff;padding:5px 10px;border-radius:5px}@media(max-width:1200px){.stats{grid-template-columns:repeat(3,1fr)}.top-title{font-size:21px}.side{width:175px}.side button{font-size:13px}}@media(max-width:720px){.top{height:auto;padding:12px;gap:12px;flex-wrap:wrap}.brand{min-width:0}.top-title{border:0;padding:0}.user{display:none}.shell{display:block}.side{width:100%;display:flex;overflow:auto;padding:4px}.side button{white-space:nowrap;width:auto;padding:10px}.stats{grid-template-columns:repeat(2,1fr)}.fields{grid-template-columns:repeat(2,1fr)}.strip{flex-wrap:wrap}.strip span{min-width:40%;border:0}.table-title{font-size:16px}}@media print{@page{size:A3 landscape;margin:7mm}body{background:white}.top{height:auto;padding:5px 0;color:black;background:white}.brand{font-size:12px;min-width:150px}.leaf,.user,.side,.toolbar,.stats,.strip,.under,#notice,.no-print,.row-actions{display:none!important}.top-title{font-size:18px;border:0;padding:0}.shell{display:block}main{padding:0}.table-title{font-size:16px;padding:5px}#schedule{min-width:0;width:100%;font-size:7px}#schedule th,#schedule td{padding:3px 2px}#schedule tr{break-inside:avoid}#schedule th:last-child,#schedule td:last-child{display:none}.table-scroll{overflow:visible}.grand td{font-size:10px}#other{display:none!important}}
+
+/* V4: conservar colores y bordes al imprimir / guardar PDF */
+@media print {
+  @page { size: A3 landscape; margin: 6mm; }
+  html, body, main, #page-programaciones, .table-scroll, #schedule {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  #schedule th, #schedule td { border: 1px solid #101820 !important; }
+  #schedule th { background: #c2e5f7 !important; }
+  #schedule td.stage-formacion { background: #03c64d !important; }
+  #schedule td.stage-post-cosecha { background: #ff802c !important; }
+  #schedule td.stage-produccion { background: #fff500 !important; }
+  #schedule td.stage-otros { background: #d6d6e3 !important; }
+  #schedule tr.subtotal td { background: #d5f6bf !important; }
+  #schedule tr.grand td { background: #bde0fa !important; }
+  .table-title { background: #d8f8dc !important; border: 2px solid #0a1d31 !important; }
+  .table-scroll { border: 2px solid #0a1d31 !important; }
+  #schedule { table-layout: auto; width: 100% !important; min-width: 0 !important; font-size: 7px; }
+  #schedule th, #schedule td { padding: 3px 2px !important; overflow-wrap: anywhere; }
+  #schedule th:nth-last-child(2), #schedule td:nth-last-child(2) { display: table-cell !important; }
+  .top { background: #062657 !important; color: white !important; padding: 6px 10px !important; }
+  .top-title { color: white !important; }
+  #schedule thead { display: table-header-group; }
+  #schedule tfoot { display: table-footer-group; }
+}
+
+/* V6 - Nuevas etapas, también visibles a color en PDF */
+#schedule td.stage-orillado { background: #a78bfa !important; }
+#schedule td.stage-traslapes { background: #f9a8d4 !important; }
+#schedule td.stage-plantacion { background: #86efac !important; }
+#schedule td.stage-via-drone { background: #67e8f9 !important; }
+@media print {
+ #schedule td.stage-orillado { background: #a78bfa !important; }
+ #schedule td.stage-traslapes { background: #f9a8d4 !important; }
+ #schedule td.stage-plantacion { background: #86efac !important; }
+ #schedule td.stage-via-drone { background: #67e8f9 !important; }
+}
+
+/* Edición manual independiente por producto */
+.product-table .lt-edit{display:block;width:100%;margin-top:4px;padding:5px 3px;font-size:11px;background:#eaf3ff;border-color:#88a9d0;white-space:nowrap}
+.product-table input[data-field="lt"]:not([readonly]){border:2px solid #1469d2;background:#fffdf0}
+
+/* V9: catálogo y reingreso por producto */
+.product-table input[data-field="name"]{min-width:210px}
+.product-table input[data-field="control"]{min-width:180px}
+.product-table input[data-field="reentry"]{min-width:120px}
+.reentry-warning{font-size:13px;color:#8a3600;font-weight:700;margin:6px 0 12px}
+.reentry-missing{background:#fff1ce!important;color:#7b3100!important;font-weight:700}
+@media print{.reentry-missing{background:#fff1ce!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}}
+
+/* V10: separar la columna DOSIS.I de ACCIONES */
+@media screen {
+  #schedule th:last-child, #schedule td.col-acciones { min-width: 116px; width: 116px; }
+  #schedule th:nth-last-child(2), #schedule td.col-dosis-i { min-width: 76px; width: 76px; text-align: center; font-weight: 700; }
+  #schedule td.col-acciones { text-align: center; white-space: nowrap; }
+  #schedule td.col-acciones button { display: inline-block; margin: 2px; }
+}
+@media print {
+  #schedule td.col-acciones, #schedule th:last-child { display: none !important; }
+  #schedule td.col-dosis-i, #schedule th:nth-last-child(2) { display: table-cell !important; }
+}
+
+
+/* CAMPOS DE DOSIS MÁS GRANDES */
+#editForm table {
+  table-layout: auto !important;
+  width: max-content !important;
+  min-width: 100%;
+}
+
+#editForm table th:nth-child(3),
+#editForm table td:nth-child(3) {
+  min-width: 150px !important;
+  width: 150px !important;
+}
+
+#editForm table th:nth-child(4),
+#editForm table td:nth-child(4) {
+  min-width: 150px !important;
+  width: 150px !important;
+}
+
+#editForm table td:nth-child(3) input,
+#editForm table td:nth-child(4) input {
+  width: 100% !important;
+  min-width: 125px !important;
+  height: 46px !important;
+  padding: 10px !important;
+  font-size: 17px !important;
+  box-sizing: border-box;
+}
+
+#editForm table th {
+  white-space: normal;
+  line-height: 1.4;
+  padding: 12px 10px;
+}
+
+/* DESPLAZAMIENTO HORIZONTAL SI ES NECESARIO */
+#editForm {
+  overflow-x: auto;
+}
+
+
+
+
+
+
+/* V13 - Anchos reales de las columnas del formulario de productos */
+@media screen {
+  #editForm .product-scroll { width: 100%; max-width: 100%; overflow-x: auto !important; }
+  #editForm .product-table { width: max-content !important; min-width: 1350px !important; table-layout: auto !important; }
+  #editForm .product-table th:nth-child(3),
+  #editForm .product-table td:nth-child(3),
+  #editForm .product-table th:nth-child(4),
+  #editForm .product-table td:nth-child(4) { min-width: 160px !important; width: 160px !important; }
+  #editForm .product-table td:nth-child(3) input,
+  #editForm .product-table td:nth-child(4) input { display: block; width: 100% !important; min-width: 135px !important; height: 46px !important; font-size: 17px !important; padding: 9px !important; }
+  #editForm .product-table th { padding: 12px 10px !important; white-space: normal !important; line-height: 1.35 !important; }
+}
+
+/* V14: HA/KG visible en pantalla y en PDF, sin selectores posicionales */
+#schedule th.col-ha-kg, #schedule td.col-ha-kg {
+  display: table-cell !important;
+  visibility: visible !important;
+  min-width: 56px;
+  text-align: center;
+  font-weight: 700;
+}
+@media print {
+  @page { size: A3 landscape; margin: 6mm; }
+  #schedule { table-layout: auto !important; width: 100% !important; min-width: 0 !important; }
+  #schedule th.col-ha-kg, #schedule td.col-ha-kg {
+    display: table-cell !important; visibility: visible !important;
+    min-width: 42px !important; width: auto !important;
+    color: #091a36 !important; opacity: 1 !important;
+    font-size: 8px !important; font-weight: 800 !important;
+    border: 1px solid #101820 !important;
+    -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
+  }
+  #schedule th.col-ha-kg { background: #c2e5f7 !important; }
+  #schedule td.col-ha-kg { background: #fff !important; }
+  #schedule th.no-print, #schedule td.col-acciones { display: none !important; }
+  #schedule thead { display: table-header-group !important; }
+}
+
+/* V15: pantalla de acceso */
+.sr-login[hidden],#sr-logout[hidden],#sr-account[hidden]{display:none!important}
+.sr-locked .shell,.sr-locked .top{visibility:hidden}
+.sr-login{position:fixed;inset:0;background:linear-gradient(135deg,#061b39,#0b4384);z-index:9999;display:grid;place-items:center;padding:18px}
+.sr-login-card{width:min(430px,100%);background:white;border-radius:14px;padding:32px;box-shadow:0 20px 55px #0005;display:flex;flex-direction:column;gap:14px}
+.sr-login-card h1{color:#082f68;margin:0;text-align:center}.sr-login-card p{text-align:center;margin:0 0 8px}
+.sr-login-card label{display:flex;flex-direction:column;gap:6px;font-weight:bold}.sr-login-card input{padding:12px;border:1px solid #9ab0ce;border-radius:6px;width:100%}
+#sr-login-status{color:#aa1e2c;font-weight:bold}#sr-logout{font-size:12px;padding:6px 8px}
+@media print{.sr-login{display:none!important}#sr-logout{display:none!important}}
+
+
+/* V16.2: separación REAL entre órdenes de trabajo. */
+#schedule tbody tr.separador-ot { height: 18px !important; }
+#schedule tbody tr.separador-ot td {
+  height: 18px !important;
+  min-height: 18px !important;
+  padding: 0 !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  border: 0 !important;
+  background: #e8f0f7 !important;
+}
+@media print {
+  #schedule tbody tr.separador-ot { height: 10px !important; break-inside: avoid; }
+  #schedule tbody tr.separador-ot td {
+    height: 10px !important;
+    min-height: 10px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: #edf3f8 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* V16.3: la última celda del separador NO es la columna ACCIONES.
+   La regla general de impresión ocultaba td:last-child y eliminaba el espacio. */
+#schedule tbody tr.separador-ot td {
+  display: table-cell !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: #e8f0f7 !important;
+}
+#schedule tbody tr.separador-ot .separador-ot-espacio {
+  display: block !important;
+  height: 18px !important;
+  min-height: 18px !important;
+}
+@media print {
+  #schedule tbody tr.separador-ot { display: table-row !important; }
+  #schedule tbody tr.separador-ot td {
+    display: table-cell !important;
+    height: auto !important;
+    min-height: 0 !important;
+    background: #ffffff !important;
+    border: 0 !important;
+    padding: 0 !important;
+  }
+  #schedule tbody tr.separador-ot .separador-ot-espacio {
+    display: block !important;
+    height: 14px !important;
+    min-height: 14px !important;
+    background: #ffffff !important;
+  }
+}
+
+/* V18: celdas verticales combinadas por OT, con productos independientes. */
+#schedule td.ot-unida { vertical-align: middle !important; text-align: center; }
+#schedule td.ot-numero { font-weight: 800; }
+#schedule tbody tr.product-line td { padding-top: 9px; padding-bottom: 9px; }
+@media print {
+  @page { size: A3 landscape; margin: 4mm; }
+  #schedule { font-size: 9px !important; table-layout: auto !important; width: 100% !important; }
+  #schedule th, #schedule td,
+  #schedule th.col-ha-kg, #schedule td.col-ha-kg,
+  #schedule td.col-dosis-i, #schedule tr.grand td {
+    font-size: 9px !important; line-height: 1.24 !important;
+    padding: 4px 2px !important; overflow-wrap: anywhere;
+  }
+  #schedule tbody tr.separador-ot td { padding: 0 !important; }
+  #schedule tbody tr.separador-ot .separador-ot-espacio { height: 12px !important; min-height: 12px !important; }
+  #schedule td.ot-unida { vertical-align: middle !important; }
+  #schedule thead tr:nth-child(2) th.col-ha-kg,
+  #schedule tbody td.col-ha-kg { display: table-cell !important; visibility: visible !important; }
+  #schedule thead th.no-print, #schedule td.col-acciones { display: none !important; }
+  #schedule thead { display: table-header-group; }
+  #schedule tbody tr.product-line { break-inside: avoid; }
+  .table-title { font-size: 17px !important; }
+}
+
+/* V19: imprimir una tabla sin rowspan para que no desaparezcan LT de otras filas. */
+#schedule-print { display:none; }
+@media print {
+  body.sr-print-lt-fix #schedule { display:none !important; }
+  body.sr-print-lt-fix #schedule-print { display:table !important; }
+  #schedule-print { width:100% !important; min-width:0 !important; border-collapse:collapse !important; table-layout:auto !important; font-size:9px !important; text-align:center; }
+  #schedule-print th,#schedule-print td { border:1px solid #101820 !important; padding:4px 2px !important; font-size:9px !important; line-height:1.24 !important; vertical-align:middle !important; overflow-wrap:anywhere; }
+  #schedule-print th { background:#c2e5f7 !important; font-weight:900; }
+  #schedule-print .stage-produccion { background:#fff500 !important; }
+  #schedule-print .stage-formacion { background:#03c64d !important; }
+  #schedule-print .stage-post-cosecha { background:#ff802c !important; }
+  #schedule-print .subtotal td { background:#d5f6bf !important; }
+  #schedule-print .grand td { background:#bde0fa !important; }
+  #schedule-print .col-acciones,#schedule-print .no-print { display:none !important; }
+  #schedule-print td.col-lt { display:table-cell !important; visibility:visible !important; color:#091a36 !important; font-weight:700 !important; white-space:nowrap !important; }
+  #schedule-print td.print-repeticion-vacia { border-top:0 !important; border-bottom:0 !important; }
+  #schedule-print td.cuartel-numero { font-size:16px !important; font-weight:800 !important; }
+  #schedule-print tr.product-line { break-inside:avoid !important; }
+  #schedule-print thead { display:table-header-group; }
+  #schedule-print tr.separador-ot td { border:0 !important; padding:0 !important; }
+  #schedule-print tr.separador-ot .separador-ot-espacio { height:12px !important; }
+  #schedule-print, #schedule-print * { -webkit-print-color-adjust:exact !important; print-color-adjust:exact !important; }
+}
+#schedule td.cuartel-numero { font-size:16px !important; font-weight:800 !important; }
+
+/* V20: PDF idéntico a la programación, sin casilleros ficticios. */
+@media print {
+  #schedule-print { table-layout:fixed !important; width:100% !important; }
+  #schedule-print tbody tr.product-line { height:auto !important; }
+  #schedule-print td.ot-unida { vertical-align:middle !important; }
+  #schedule-print td.col-lt { font-size:9px !important; padding:4px 2px !important; }
+  #schedule-print tbody td { min-height:0 !important; }
+  #schedule-print th, #schedule-print td { overflow-wrap:normal !important; word-break:normal !important; }
+  #schedule-print th { overflow-wrap:anywhere !important; }
+}
+
+/* V24: Evitar desbordamiento en el indicador de mojamiento */
+#statMoj{font-size:22px;overflow-wrap:anywhere;line-height:1.2;}
+
+/* V27: edición opcional de DOSIS.I, igual que Editar LT */
+#editCilindros.edit-dosisi{display:block;width:100%;margin-top:5px;padding:6px 9px;border:1px solid #93b4e4;border-radius:5px;background:#eaf3ff;color:#163b72;font-weight:600;cursor:pointer;}
+#editCilindros.edit-dosisi:hover{background:#d8e9ff;}
+#fCilindros[readonly]{background:#f4f7fb;cursor:default;}

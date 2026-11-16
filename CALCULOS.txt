@@ -1,0 +1,11 @@
+CÁLCULOS V3 — Basado en Libro3 (1).xlsx, hoja 1, celdas D22, M25 y AD25.
+
+Tanques = REDONDEAR.MAS(Ha * Mojamiento / Capacidad tanque, 1 decimal)
+Dosis por tanque = Dosis por 200 L * Capacidad tanque / 200
+Cantidad producto = Dosis por tanque * Tanques
+
+Ejemplo: Ha=5.32, Mojamiento=1000, Capacidad=2000, Dosis por 200 L=0.24
+Tanques=2.7, Dosis tanque=2.4, Cantidad=6.48.
+
+La cantidad calculada es L o kg según unidad del producto. Se permite modo manual para OT anteriores.
+Los datos siguen guardándose localmente en el navegador, no en Supabase.

@@ -1,0 +1,16 @@
+FUNDO SANTA ROSA - VERSION 4: IMPRESION PDF A COLOR
+
+1. Abre index.html en Chrome o Edge.
+2. Carga la programacion y pulsa PDF o Imprimir.
+3. Destino: Guardar como PDF.
+4. Orientacion: Horizontal. Papel: A3 (para conservar todas las columnas).
+5. En 'Mas ajustes', activa 'Graficos de fondo' / 'Imprimir fondos'.
+6. Escala: Ajustar a pagina si es necesario.
+7. Guarda el PDF.
+
+Se conserva el color de FORMACION, POST-COSECHA, PRODUCCION,
+encabezados, subtotales, total general y bordes negros.
+
+IMPORTANTE: El navegador puede desactivar los fondos en sus ajustes.
+Si el PDF sale blanco, activa 'Graficos de fondo'.
+Los datos continuan guardandose localmente, no en Supabase.
