@@ -280,3 +280,43 @@
 #editCilindros.edit-dosisi{display:block;width:100%;margin-top:5px;padding:6px 9px;border:1px solid #93b4e4;border-radius:5px;background:#eaf3ff;color:#163b72;font-weight:600;cursor:pointer;}
 #editCilindros.edit-dosisi:hover{background:#d8e9ff;}
 #fCilindros[readonly]{background:#f4f7fb;cursor:default;}
+
+/* V29: colores de confirmación, también en PDF y en la tabla de impresión clonada */
+#schedule tbody td.confirmacion-estado,
+#schedule-print tbody td.confirmacion-estado {font-weight:800!important;text-align:center!important;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+#schedule tbody td.confirmacion-confirmado, #schedule-print tbody td.confirmacion-confirmado {background:#fff200!important;color:#111!important;}
+#schedule tbody td.confirmacion-pendiente, #schedule-print tbody td.confirmacion-pendiente {background:#ff3535!important;color:#fff!important;}
+#schedule tbody td.confirmacion-programado, #schedule-print tbody td.confirmacion-programado {background:#ff9800!important;color:#111!important;}
+#schedule tbody td.confirmacion-no-aplicado, #schedule-print tbody td.confirmacion-no-aplicado {background:#19c45b!important;color:#fff!important;}
+
+/* V30: dar espacio al estado de CONFIRMACIÓN sin desbordar.
+   Es la celda 16 de la primera fila de encabezados (DOSIS ocupa 3 columnas). */
+#schedule thead tr:first-child th:nth-child(16),
+#schedule tbody td.confirmacion-estado {
+  min-width: 124px !important;
+  width: 124px;
+  box-sizing: border-box;
+}
+#schedule tbody td.confirmacion-estado {
+  white-space: nowrap !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+  text-align: center !important;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+}
+@media print {
+  #schedule-print thead tr:first-child th:nth-child(16),
+  #schedule-print tbody td.confirmacion-estado {
+    width: 8% !important;
+    min-width: 0 !important;
+  }
+  #schedule-print tbody td.confirmacion-estado {
+    white-space: nowrap !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+    font-size: 9px !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+  }
+}
