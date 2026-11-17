@@ -443,3 +443,38 @@
  #page-programaciones .table-scroll{display:block!important}
  #page-programaciones #mobileOtCards{display:none!important}
 }
+
+/* V34: controles grandes y mejor uso del alto en celulares */
+@media screen and (max-width: 1024px) {
+  .side { gap: 8px; padding: 10px 8px; }
+  .side button { min-height: 48px; padding: 13px 17px; font-size: 14px; font-weight: 700; }
+  main { padding: 14px 12px 42px; }
+  .selectors { gap: 10px; }
+  .selectors label { font-size: 14px; font-weight: 700; }
+  .selectors input, .selectors select { min-height: 52px; font-size: 16px; padding: 10px; }
+  .actions { gap: 10px; margin-top: 12px; }
+  .actions button { min-height: 62px; padding: 14px 8px; font-size: 16px; font-weight: 800; border-radius: 9px; }
+  .stats { gap: 11px; margin-top: 14px; }
+  .stats article { min-height: 126px; padding: 16px 9px; gap: 7px; font-size: 14px; justify-content: center; }
+  .stats article span { font-size: 29px; }
+  .stats strong { font-size: 25px; }
+  #statMoj { font-size: 21px !important; }
+  .strip { margin-top: 12px; min-height: 70px; align-items: center; }
+  .strip span { font-size: 12px; line-height: 1.35; padding: 10px 5px; }
+  .table-title { margin-top: 12px; padding: 17px 10px; font-size: 16px; }
+  #mobileOtCards .mobile-empty { min-height: 190px; display:flex; align-items:center; justify-content:center; padding: 30px 20px; font-size: 17px; line-height:1.5; }
+  #mobileOtCards .mobile-ot-card { font-size: 15px; }
+  #mobileOtCards .mobile-ot-head { min-height: 62px; font-size: 17px; }
+  #mobileOtCards .mobile-ot-meta span { padding: 12px 6px; }
+  #mobileOtCards .mobile-product { padding: 16px 0; }
+  #mobileOtCards button { min-height: 48px; font-size: 14px; }
+  .under { gap: 10px; margin-top: 12px; }
+  .under button { min-height: 60px; font-size: 15px; font-weight: 700; border-radius: 9px; }
+  .under small { font-size: 12px; line-height: 1.5; }
+  dialog button { min-height: 46px; }
+}
+@media screen and (max-width: 390px) {
+  .actions button { font-size: 14px; }
+  .stats article { min-height: 112px; }
+  .under button { font-size: 13px; }
+}
