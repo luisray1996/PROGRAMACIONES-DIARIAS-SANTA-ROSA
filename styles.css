@@ -513,3 +513,13 @@
  #mobileOtCards .mobile-ot-footer button{flex:1;margin:0;min-height:52px;font-size:16px;border-radius:9px}
 }
 @media screen and (max-width:370px){#mobileOtCards .mobile-ot-meta{gap:4px;padding:8px}#mobileOtCards .mobile-ot-meta span{font-size:10px}}
+
+/* V37: panel de reprogramación, sin alterar estilos de impresión */
+.reprogram-dialog{max-width:min(560px,95vw)}
+#reprogramForm{padding:22px;max-height:90vh;overflow:auto}
+.reprogram-fields{display:grid;gap:14px}
+.reprogram-fields label{display:flex;flex-direction:column;gap:6px;font-weight:700}
+.reprogram-fields input,.reprogram-fields select,.reprogram-fields textarea{width:100%;padding:12px;border:1px solid #9aabc1;border-radius:6px;font:inherit}
+#reprogramTop{background:#0755bd;color:#fff}
+@media(max-width:720px){#reprogramTop{grid-column:1/-1;min-height:48px;font-size:14px}.reprogram-dialog{width:96vw}#reprogramForm{padding:16px}}
+@media print{#reprogramDialog,#reprogramTop{display:none!important}}

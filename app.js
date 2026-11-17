@@ -71,21 +71,21 @@ async function save(){if(!window.srAuthReady||!srCurrentUserId)return alert('Ini
 // Reprogramación: conserva la OT original pendiente y crea una copia en otra fecha.
 // Guarda primero el destino; después registra la referencia en el origen.
 // Si falla el segundo guardado, se informa que la copia ya existe para evitar duplicados.
-async function reprogramOt(uid){
+async function reprogramOt(uid, options=null){
  if(!window.srAuthReady||!srCurrentUserId)return alert('Inicia sesión.');
  const original=items.find(x=>x.uid===uid);
  if(!original||String(original.conf).toUpperCase()!=='PENDIENTE')return alert('Solo se reprograman OT pendientes.');
  if(original.reprogramadaA)return alert('Esta OT ya fue reprogramada a '+original.reprogramadaA.fecha+'.');
  const originDate=date,originTurn=turn,userId=srCurrentUserId;
- const targetDate=prompt('Nueva fecha (AAAA-MM-DD):',originDate);
+ const targetDate=options?options.fecha:prompt('Nueva fecha (AAAA-MM-DD):',originDate);
  if(targetDate===null)return;
  if(!/^\d{4}-\d{2}-\d{2}$/.test(targetDate)||Number.isNaN(Date.parse(targetDate+'T12:00:00')))return alert('Fecha inválida. Usa AAAA-MM-DD.');
- const targetTurn=prompt('Turno destino (DIA o NOCHE):',originTurn);
+ const targetTurn=options?options.turno:prompt('Turno destino (DÍA o NOCHE):',originTurn);
  if(targetTurn===null)return;
- const destTurn=targetTurn.trim().toUpperCase().replace('Í','I');
- if(!['DIA','NOCHE'].includes(destTurn))return alert('Turno inválido: DIA o NOCHE.');
+ const destTurn=targetTurn.trim().toUpperCase().replace(/^DIA$/,'DÍA');
+ if(!['DÍA','NOCHE'].includes(destTurn))return alert('Turno inválido: DÍA o NOCHE.');
  if(targetDate===originDate&&destTurn===originTurn)return alert('Selecciona otra fecha o turno.');
- const reason=prompt('Motivo de reprogramación (obligatorio):','Aplicación pendiente');
+ const reason=options?options.motivo:prompt('Motivo de reprogramación (obligatorio):','Aplicación pendiente');
  if(reason===null)return;
  if(!reason.trim())return alert('Escribe el motivo.');
  if(!confirm(`¿Copiar OT ${original.ot} del ${originDate} (${originTurn}) al ${targetDate} (${destTurn})? La original seguirá PENDIENTE.`))return;
@@ -98,7 +98,7 @@ async function reprogramOt(uid){
   const sourceItems=source?.datos?.items;
   const savedOt=sourceItems?.find(x=>x.uid===uid);
   if(!savedOt)throw Error('Primero pulsa Guardar para almacenar la OT original en Supabase.');
-  if(savedOt.conf!=='PENDIENTE')throw Error('La OT guardada ya no está PENDIENTE.');
+  if(String(savedOt.conf).toUpperCase()!=='PENDIENTE')throw Error('La OT guardada ya no está PENDIENTE.');
   if(savedOt.reprogramadaA)throw Error('Esta OT ya figura como reprogramada. Recarga la fecha original.');
   const {data:destination,error:destErr}=await client.from('programaciones_diarias').select('datos').eq('fecha',targetDate).eq('turno',destTurn).eq('creado_por',userId).maybeSingle();
   if(destErr)throw destErr;
@@ -132,8 +132,29 @@ async function reprogramOt(uid){
    persistUserCache();
    if(date===originDate&&turn===originTurn){items=newSource;render()}
   }
+  $('reprogramDialog')?.close();
   alert(`OT ${savedOt.ot} reprogramada para ${targetDate} (${destTurn}). El original permanece PENDIENTE.`);
  }catch(e){alert('No se completó la reprogramación: '+e.message)}
+}
+
+function openReprogramDialog(){
+ if(!window.srAuthReady||!srCurrentUserId)return alert('Inicia sesión primero.');
+ const pending=items.filter(ot=>String(ot.conf||'').toUpperCase()==='PENDIENTE'&&!ot.reprogramadaA);
+ if(!pending.length)return alert('No hay OT pendientes disponibles para reprogramar en la fecha y turno seleccionados.');
+ $('reprogramUid').innerHTML=pending.map(ot=>`<option value="${esc(ot.uid)}">OT ${esc(ot.ot)} — Cuartel ${esc(ot.cuartel)} — ${esc(ot.stage)}</option>`).join('');
+ const next=new Date(date+'T12:00:00');next.setDate(next.getDate()+1);
+ $('reprogramDate').value=[next.getFullYear(),String(next.getMonth()+1).padStart(2,'0'),String(next.getDate()).padStart(2,'0')].join('-');
+ $('reprogramTurn').value=turn;
+ $('reprogramReason').value='';
+ $('reprogramDialog').showModal();
+}
+async function submitReprogramForm(e){
+ e.preventDefault();
+ const btn=$('confirmReprogram');
+ btn.disabled=true;
+ try{
+  await reprogramOt($('reprogramUid').value,{fecha:$('reprogramDate').value,turno:$('reprogramTurn').value,motivo:$('reprogramReason').value});
+ }finally{btn.disabled=false}
 }
 
 function render(){
@@ -201,7 +222,7 @@ function render(){
     `<div class="mobile-ot-meta"><span>CUARTEL <b>${esc(ot.cuartel)}</b></span><span>ÁREA <b>${fmt(ot.ha)} Ha</b></span><span>DOSIS.I <b>${fmt(otTanks(ot))}</b></span></div>`+
     `<div class="mobile-ot-info"><span>Turno: <b>${esc(turn)}</b></span><span>Mojamiento: <b>${esc(ot.moj)} L/Ha</b></span><span>DDC: <b>${esc(ot.ddc)}</b></span><span>Reingreso: <b>${esc(displayReentry(generalReentry(prods).text))}</b></span></div>`+
     `<div class="mobile-ot-products"><strong>PRODUCTOS (${prods.length})</strong>${prods.map(x=>`<div class="mobile-product"><b>${esc(x.name)}</b><div class="mobile-product-values"><span>Dosis: <b>${esc(x.dose)}</b></span><span>LT: <b>${fmt(x.lt)}</b></span></div><small>${esc(x.control||'')}</small></div>`).join('')}</div>`+
-    `<div class="mobile-ot-footer"><span class="mobile-confirm ${cls}">${esc(conf)}</span><div><button type="button" data-edit="${esc(ot.uid)}">Editar</button><button type="button" data-del="${esc(ot.uid)}">Eliminar</button></div></div></article>`;
+    `<div class="mobile-ot-footer"><span class="mobile-confirm ${cls}">${esc(conf)}</span><div><button type="button" data-edit="${esc(ot.uid)}">Editar</button><button type="button" data-del="${esc(ot.uid)}">Eliminar</button>${conf==='PENDIENTE'&&!ot.reprogramadaA?`<button type="button" data-reprogram="${esc(ot.uid)}">↻ Reprogramar</button>`:''}</div></div></article>`;
   }).join(''):'<p class="mobile-empty">Sin órdenes. Pulsa Agregar OT para comenzar.</p>';
  }
  $('rows').innerHTML=html;
@@ -271,7 +292,7 @@ function exportCsv(){const cols=['Fecha','Turno','Etapa','OT','Cuartel','Product
 function backup(){download(new Blob([JSON.stringify({version:2,records},null,2)],{type:'application/json'}),`Respaldo_Santa_Rosa_${new Date().toISOString().slice(0,10)}.json`)}
 $('catalogoNombres').innerHTML=PRODUCT_CATALOG.map(p=>`<option value="${esc(p.name)}"></option>`).join('');
 ['fHa','fMoj','fTanque'].forEach(k=>$(k).addEventListener('input',updateCalculations));$('editCilindros').addEventListener('click',()=>{const manual=$('fCilindros').dataset.manual==='true';$('fCilindros').dataset.manual=String(!manual);updateCalculations();if(!manual)$('fCilindros').focus();});$('fAuto').addEventListener('input',updateCalculations);$('fCilindros').addEventListener('input',()=>{if($('fCilindros').dataset.manual==='true')updateCalculations()});$('fecha').value=date;$('turno').value=turn;read();load();
-$('fecha').addEventListener('change',e=>{date=e.target.value;load()});$('turno').addEventListener('change',e=>{turn=e.target.value;load()});$('save').onclick=save;$('addOt').onclick=()=>openEditor();$('addProduct').onclick=()=>productRow();$('editForm').onsubmit=submit;$('closeModal').onclick=$('cancel').onclick=()=>$('editor').close();$('mobileOtCards').onclick=e=>{const b=e.target.closest('button');if(!b)return;const target=[...$('rows').querySelectorAll('button')].find(x=>b.dataset.edit&&x.dataset.edit===b.dataset.edit||b.dataset.del&&x.dataset.del===b.dataset.del||b.dataset.reprogram&&x.dataset.reprogram===b.dataset.reprogram);if(target)target.click()};$('rows').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.edit)openEditor(b.dataset.edit);if(b.dataset.reprogram)reprogramOt(b.dataset.reprogram);if(b.dataset.del&&confirm('¿Eliminar esta OT de la programación actual?')){items=items.filter(x=>x.uid!==b.dataset.del);render();notify('OT eliminada en pantalla. Pulsa Guardar para conservar el cambio.')}};$('new').onclick=$('sideNew').onclick=()=>{if(confirm('¿Crear una programación nueva en la fecha y turno seleccionados? Los cambios no guardados se perderán.')){items=[];render();switchView('programaciones');notify('Nueva programación en blanco.')}};$('print').onclick=$('pdf').onclick=()=>{switchView('programaciones');setTimeout(()=>window.print(),80)};$('excel').onclick=exportCsv;$('backup').onclick=backup;$('restore').onclick=()=>$('restoreFile').click();$('restoreFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{const obj=JSON.parse(await file.text());if(obj.version!==2||!obj.records||typeof obj.records!=='object'||Array.isArray(obj.records))throw Error('Formato de respaldo no válido');if(!confirm('¿Importar el respaldo? Reemplazará todas las programaciones guardadas en este navegador.'))return;records=obj.records;persistUserCache();load();notify('Respaldo importado en caché privada. Guarda cada programación para subirla a Supabase.')}catch(err){alert('Error al importar: '+err.message)}e.target.value=''};$('history').onclick=()=>refreshOwnHistory();document.querySelectorAll('.side button[data-view]').forEach(b=>b.onclick=()=>b.dataset.view==='historial'?refreshOwnHistory():switchView(b.dataset.view));$('other').onclick=async e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.move){moveSavedDate(b.dataset.move);return;}if(b.dataset.open){const v=records[b.dataset.open];if(!v)return;date=v.date;turn=v.turn;$('fecha').value=date;$('turno').value=turn;load();switchView('programaciones')}if(b.dataset.remove&&confirm('¿Eliminar esta programación de tu cuenta en Supabase?')){const [f,t]=b.dataset.remove.split('|');const uid=srCurrentUserId;const {error}=await window.srClient.from('programaciones_diarias').delete().eq('fecha',f).eq('turno',t).eq('creado_por',uid);if(error){alert('No se pudo eliminar: '+error.message)}else if(uid===srCurrentUserId){delete records[b.dataset.remove];persistUserCache();await refreshOwnHistory()}}if(b.id==='goSchedule')switchView('programaciones');if(b.id==='loadDemo'){if(!confirm('¿Cargar cuatro OT de ejemplo en la programación actual? No se guardarán hasta pulsar Guardar.'))return;items=structuredClone(demo);render();switchView('programaciones')}if(b.id==='settingsBackup')backup()};
+$('reprogramTop').onclick=openReprogramDialog;$('reprogramForm').addEventListener('submit',submitReprogramForm);$('closeReprogram').onclick=$('cancelReprogram').onclick=()=>$('reprogramDialog').close();$('fecha').addEventListener('change',e=>{date=e.target.value;load()});$('turno').addEventListener('change',e=>{turn=e.target.value;load()});$('save').onclick=save;$('addOt').onclick=()=>openEditor();$('addProduct').onclick=()=>productRow();$('editForm').onsubmit=submit;$('closeModal').onclick=$('cancel').onclick=()=>$('editor').close();$('mobileOtCards').onclick=e=>{const b=e.target.closest('button');if(!b)return;const target=[...$('rows').querySelectorAll('button')].find(x=>b.dataset.edit&&x.dataset.edit===b.dataset.edit||b.dataset.del&&x.dataset.del===b.dataset.del||b.dataset.reprogram&&x.dataset.reprogram===b.dataset.reprogram);if(target)target.click()};$('rows').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.edit)openEditor(b.dataset.edit);if(b.dataset.reprogram)reprogramOt(b.dataset.reprogram);if(b.dataset.del&&confirm('¿Eliminar esta OT de la programación actual?')){items=items.filter(x=>x.uid!==b.dataset.del);render();notify('OT eliminada en pantalla. Pulsa Guardar para conservar el cambio.')}};$('new').onclick=$('sideNew').onclick=()=>{if(confirm('¿Crear una programación nueva en la fecha y turno seleccionados? Los cambios no guardados se perderán.')){items=[];render();switchView('programaciones');notify('Nueva programación en blanco.')}};$('print').onclick=$('pdf').onclick=()=>{switchView('programaciones');setTimeout(()=>window.print(),80)};$('excel').onclick=exportCsv;$('backup').onclick=backup;$('restore').onclick=()=>$('restoreFile').click();$('restoreFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{const obj=JSON.parse(await file.text());if(obj.version!==2||!obj.records||typeof obj.records!=='object'||Array.isArray(obj.records))throw Error('Formato de respaldo no válido');if(!confirm('¿Importar el respaldo? Reemplazará todas las programaciones guardadas en este navegador.'))return;records=obj.records;persistUserCache();load();notify('Respaldo importado en caché privada. Guarda cada programación para subirla a Supabase.')}catch(err){alert('Error al importar: '+err.message)}e.target.value=''};$('history').onclick=()=>refreshOwnHistory();document.querySelectorAll('.side button[data-view]').forEach(b=>b.onclick=()=>b.dataset.view==='historial'?refreshOwnHistory():switchView(b.dataset.view));$('other').onclick=async e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.move){moveSavedDate(b.dataset.move);return;}if(b.dataset.open){const v=records[b.dataset.open];if(!v)return;date=v.date;turn=v.turn;$('fecha').value=date;$('turno').value=turn;load();switchView('programaciones')}if(b.dataset.remove&&confirm('¿Eliminar esta programación de tu cuenta en Supabase?')){const [f,t]=b.dataset.remove.split('|');const uid=srCurrentUserId;const {error}=await window.srClient.from('programaciones_diarias').delete().eq('fecha',f).eq('turno',t).eq('creado_por',uid);if(error){alert('No se pudo eliminar: '+error.message)}else if(uid===srCurrentUserId){delete records[b.dataset.remove];persistUserCache();await refreshOwnHistory()}}if(b.id==='goSchedule')switchView('programaciones');if(b.id==='loadDemo'){if(!confirm('¿Cargar cuatro OT de ejemplo en la programación actual? No se guardarán hasta pulsar Guardar.'))return;items=structuredClone(demo);render();switchView('programaciones')}if(b.id==='settingsBackup')backup()};
 
 // V15: Autenticación y sincronización de programaciones en Supabase.
 const SR_URL='https://sokrhqmljarvolmcfuvg.supabase.co';
