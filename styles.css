@@ -370,3 +370,34 @@
 }
 @media screen and (max-width:370px){.actions{grid-template-columns:repeat(2,minmax(0,1fr))}.fields{grid-template-columns:1fr}}
 @media print{.mobile-ot-cards{display:none!important}}
+
+/* V32: vista móvil real, no tabla comprimida */
+@media screen and (max-width: 900px) {
+ .top{height:auto;min-height:70px;flex-wrap:wrap;gap:8px;padding:12px}
+ .top-title{flex:1 1 100%;border-left:0;border-top:1px solid #7f9ec4;padding:8px 0 0;font-size:16px;text-align:center}
+ .brand{min-width:0}.user{margin-left:auto}
+ .shell{display:block;min-height:0}
+ .side{width:100%;display:flex;overflow-x:auto;gap:4px;position:sticky;top:0;z-index:20;padding:5px}
+ .side button{flex:0 0 auto;width:auto;white-space:nowrap;padding:10px 12px}
+ main{width:100%;padding:10px 10px 80px}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .strip{flex-wrap:wrap}.strip span{flex:1 1 45%;border-right:0}
+ #page-programaciones .table-scroll{display:none!important}
+ #page-programaciones .mobile-ot-cards{display:grid!important;grid-template-columns:1fr;gap:12px;padding:12px 0}
+ .mobile-ot-card{min-width:0;background:white;border:1px solid #c2cfdf;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px #102d4c1c}
+ .mobile-ot-head{display:flex;align-items:center;justify-content:space-between;padding:14px;gap:10px;font-weight:800}
+ .mobile-ot-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .mobile-ot-meta span{min-width:0;overflow-wrap:anywhere}
+ .mobile-ot-products{padding:12px}
+ .mobile-product{padding:12px 0;border-top:1px solid #dfe7f0}
+ .mobile-ot-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:12px;background:#f4f7fb}
+ .mobile-confirm{max-width:none}
+ .actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .actions button{min-width:0;overflow-wrap:anywhere}
+ .selectors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .selectors label{min-width:0}.selectors input,.selectors select{max-width:100%;min-width:0}
+ .fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .product-scroll{max-width:100%;overflow-x:auto}
+}
+@media screen and (max-width: 440px){.fields{grid-template-columns:1fr}.actions{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media print{#page-programaciones .table-scroll{display:block!important}#page-programaciones .mobile-ot-cards{display:none!important}}
