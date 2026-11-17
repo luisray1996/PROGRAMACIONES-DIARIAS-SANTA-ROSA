@@ -320,3 +320,53 @@
     padding-right: 2px !important;
   }
 }
+
+/* V31: experiencia móvil. La tabla de escritorio/PDF no se modifica. */
+.mobile-ot-cards{display:none}
+@media screen and (max-width:760px){
+ html,body{max-width:100%;overflow-x:hidden}
+ .top{padding:12px 14px;gap:8px;align-items:center}
+ .brand{font-size:15px;min-width:0}.leaf{font-size:29px}
+ .top-title{width:100%;flex-basis:100%;font-size:15px;letter-spacing:0}
+ .user{display:flex;white-space:normal;flex-wrap:wrap;font-size:12px;gap:5px}
+ .shell{display:block;min-height:0}
+ .side{width:100%;display:flex;gap:3px;overflow-x:auto;overscroll-behavior-x:contain;position:sticky;top:0;z-index:20;padding:5px;background:#082a59}
+ .side button{width:auto;flex:0 0 auto;white-space:nowrap;padding:11px 12px;font-size:12px}
+ main{padding:12px 10px 90px;width:100%}
+ .toolbar{display:block}.selectors{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+ .selectors label{min-width:0;padding:7px;font-size:12px}.selectors input,.selectors select{display:block;width:100%;min-width:0;font-size:14px}
+ .actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:9px}
+ .actions button{min-width:0;padding:11px 4px;font-size:11px;overflow-wrap:anywhere}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .stats article{min-height:78px;padding:8px 5px;gap:5px;font-size:11px}.stats article span{font-size:19px}.stats strong{font-size:18px;overflow-wrap:anywhere}
+ #statMoj{font-size:16px!important}
+ .strip{gap:5px;padding:7px}.strip span{min-width:45%;font-size:10px;padding:4px 2px}
+ .table-title{font-size:14px;padding:10px}
+ #page-programaciones .table-scroll{display:none}
+ .mobile-ot-cards{display:grid;gap:12px;padding:10px 0}
+ .mobile-ot-card{background:#fff;border:1px solid #b7c8dc;border-radius:11px;overflow:hidden;box-shadow:0 3px 10px #0b2e5912}
+ .mobile-ot-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px;color:#101d31;font-size:13px}
+ .mobile-ot-head span{font-weight:900;font-size:15px}
+ .mobile-ot-meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid #e3e9f0}
+ .mobile-ot-meta span{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;font-size:10px;color:#53647c;padding:10px 3px;border-right:1px solid #e3e9f0}
+ .mobile-ot-meta span:last-child{border-right:0}.mobile-ot-meta b{color:#092552;font-size:17px}
+ .mobile-ot-info{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;padding:12px;font-size:12px;color:#475569}
+ .mobile-ot-info b{color:#102c4d}
+ .mobile-ot-products{padding:0 12px 9px}.mobile-ot-products>strong{font-size:12px;color:#0a376f}
+ .mobile-product{display:grid;gap:4px;border-top:1px solid #e3e9f0;padding:9px 0;font-size:12px}.mobile-product span{color:#1f3c59}.mobile-product small{color:#64748b}
+ .mobile-ot-footer{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:10px 12px;background:#f3f7fc}
+ .mobile-confirm{border-radius:5px;padding:8px 6px;font-size:10px;font-weight:900;max-width:42%;overflow-wrap:anywhere}
+ .mobile-ot-footer button{padding:8px 9px;font-size:12px;margin-left:4px}
+ .mobile-confirm.confirmacion-confirmado{background:#fff200;color:#111}.mobile-confirm.confirmacion-pendiente{background:#ff3535;color:#fff}.mobile-confirm.confirmacion-programado{background:#ff9800;color:#111}.mobile-confirm.confirmacion-no-aplicado{background:#19c45b;color:#fff}
+ .under{display:grid;grid-template-columns:1fr 1fr}.under button{font-size:12px;padding:10px 4px}.under small{grid-column:1/-1}
+ dialog{width:calc(100vw - 12px);max-width:none;max-height:96dvh;margin:auto}
+ #editForm{padding:12px;max-height:92dvh;overflow-y:auto;overflow-x:hidden}
+ .modal-head h2{font-size:17px}.fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .fields label{font-size:12px}.fields input,.fields select{font-size:16px;min-height:42px}
+ .product-scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+ .product-table{min-width:900px}.product-table input{font-size:16px}
+ .modal-actions{position:sticky;bottom:0;background:#fff;padding:10px 0;z-index:2}
+ #other{padding:12px;overflow-wrap:anywhere}.history-wrap{max-width:100%;overflow-x:auto}
+}
+@media screen and (max-width:370px){.actions{grid-template-columns:repeat(2,minmax(0,1fr))}.fields{grid-template-columns:1fr}}
+@media print{.mobile-ot-cards{display:none!important}}
