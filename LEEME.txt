@@ -8,3 +8,5 @@ V86: conserva el listado V84, botón Duplicar verde y Eliminar rojo del mismo ta
 V91: rótulos de las cuatro firmas inferiores ampliados, sin mover líneas de firma.
 
 V92: fecha principal ampliada a 7.5 pt y negrita en impresion y PDF.
+
+V94: dosis por tanque automática con tres decimales; edición manual conservada.
