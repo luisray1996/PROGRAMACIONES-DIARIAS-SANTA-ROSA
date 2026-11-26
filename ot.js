@@ -59,7 +59,7 @@ function selectProductRow(row){const get=k=>content.querySelector('[data-cell="'
 function refreshPositions(){const sel=el('otPosition');for(let i=1;i<=13;i++){const name=content.querySelector('[data-cell="B'+(i+24)+'"]')?.textContent.trim();sel.options[i].textContent=i+' — '+(name||'Vacía');}}
 el('otPosition').addEventListener('focus',refreshPositions);
 el('otPosition').onchange=()=>{const pos=Number(el('otPosition').value);if(!pos){resetProductEdit();return;}const row=pos+24;const name=content.querySelector('[data-cell="B'+row+'"]')?.textContent.trim();if(!name){resetProductEdit();el('otProductMessage').textContent='La fila '+pos+' está vacía.';return;}selectProductRow(row);};
-el('otDeleteProduct').onclick=()=>{if(editingRow===null||!el('otPaper'))return;const row=editingRow;const name=content.querySelector('[data-cell="B'+row+'"]')?.textContent||originalProduct;if(!confirm('¿Eliminar '+name+' de la fila '+(row-24)+'?'))return;content.querySelectorAll('[data-cell]').forEach(e=>{const k=e.dataset.cell;if(new RegExp('^[A-Z]+'+row+'$').test(k)){e.textContent='';values[k]='';manualOverrides.delete(k);}});resetProductEdit();el('otProductPick').value='';el('otCuartelPick').value='';el('otAreaPick').value='';updateDosePick();el('otFieldValue').value='';delete el('otFieldValue').dataset.target;el('otFieldLabel').textContent='Selecciona un casillero';recalc();refreshPositions();el('otProductMessage').textContent='Producto eliminado de la fila '+(row-24)+'. Guarda la OT para conservar el cambio.';};
+el('otDeleteProduct').onclick=()=>{if(editingRow===null||!el('otPaper'))return;const row=editingRow;const name=content.querySelector('[data-cell="B'+row+'"]')?.textContent||originalProduct;if(!confirm('¿Eliminar '+name+' de la fila '+(row-24)+' y su registro de confirmación correspondiente?'))return;content.querySelectorAll('[data-cell]').forEach(e=>{const k=e.dataset.cell;if(new RegExp('^[A-Z]+(?:'+row+'|'+(row+30)+')$').test(k)){e.textContent='';values[k]='';manualOverrides.delete(k);}});resetProductEdit();el('otProductPick').value='';el('otCuartelPick').value='';el('otAreaPick').value='';updateDosePick();el('otFieldValue').value='';delete el('otFieldValue').dataset.target;el('otFieldLabel').textContent='Selecciona un casillero';recalc();refreshPositions();el('otProductMessage').textContent='Producto eliminado de la fila '+(row-24)+'. Guarda la OT para conservar el cambio.';};
 el('otCancelProduct').onclick=()=>{resetProductEdit();el('otProductPick').value='';el('otProductMessage').textContent='Edición cancelada';};
 el('otProductPick').addEventListener('input',()=>{const p=PRODUCT_CATALOG.find(p=>p.name.trim().toUpperCase()===el('otProductPick').value.trim().toUpperCase());el('otIngredientPick').value=p?.ingredient||'';});
 content.addEventListener('click',e=>{const k=e.target.closest('[data-cell]')?.dataset.cell;if(/^B(2[5-9]|3[0-7])$/.test(k||''))selectProductRow(Number(k.slice(1)));});
@@ -83,6 +83,8 @@ function addCatalogProduct(){
  */
  if(row===null){msg.textContent='No hay filas vacías. La OT admite 13 productos.';return;}
  const put=(k,v)=>{const e=cell(k);if(e){e.textContent=String(v??'');values[k]=e.textContent;manualOverrides.add(k);}};
+ const previous=Object.fromEntries(['B','E','H','G','V','W','AD'].map(k=>[k,cell(k+row)?.textContent||'']));
+ const previousMoj=cell('D21')?.textContent||'', previousDose=cell('D22')?.textContent||'';
  const moj=el('otMojPick').value.trim().replace(',','.');
  if(moj!==''&&(!/^\d+(?:\.\d+)?$/.test(moj)||!Number.isFinite(Number(moj))||Number(moj)<=0)){msg.textContent='Ingresa un mojamiento válido mayor que cero.';el('otMojPick').focus();return;}
  const doseText=el('otDosePick').value.trim().replace(',','.');
@@ -99,6 +101,13 @@ function addCatalogProduct(){
  put('K'+row,'24');if(!wasEditing||normalize(name)!==normalize(originalProduct))put('S'+row,otCarencia[normalize(name)]||'');
  put('AE'+row,otUnits[normalize(name)]||'');put('AF'+row,'SI');put('AG'+row,'SI');
  recalc('B'+row);recalc('G'+row);
+ const lower=row+30;
+ const actualRate=(total,ha)=>{const t=calcNum(total),a=calcNum(ha);return t!==null&&a!==null&&a>0?(t/a).toFixed(3):'';};
+ const prior={B:previous.B,E:previous.E,H:previous.H,I:previous.G,K:previous.V,L:previous.W,M:previousMoj,O:previousDose,P:previous.AD,Q:actualRate(previous.AD,previous.H)};
+ const get=k=>cell(k+row)?.textContent||'';
+ const proposed={B:get('B'),E:get('E'),H:get('H'),I:get('G'),K:get('V'),L:get('W'),M:moj,O:cell('D22')?.textContent||'',P:get('AD'),Q:actualRate(get('AD'),get('H'))};
+ for(const [k,v] of Object.entries(proposed)){const target=cell(k+lower);if(target&&(!target.textContent.trim()||(wasEditing&&target.textContent===prior[k])))put(k+lower,v);}
+
  msg.textContent=name+' — Cuartel '+cuartel+' — '+(area===''?'Hectáreas sin dato; completar manualmente':area+' ha')+(wasEditing?' — actualizado en fila ':' — agregado en fila ')+(row-24)+' de 13.';
  resetProductEdit();refreshPositions();input.value='';input.focus();
 }
