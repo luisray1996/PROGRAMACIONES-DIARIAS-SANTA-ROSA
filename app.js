@@ -1,6 +1,7 @@
 'use strict';
 const $=id=>document.getElementById(id), KEY='santarosa_google_v39_';
-const today='2026-11-13';let date=today,turn='NOCHE',items=[],editing=null,records={};
+function fechaActualPeru(){const partes=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Lima',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const get=t=>partes.find(p=>p.type===t).value;return `${get('year')}-${get('month')}-${get('day')}`;}
+const today=fechaActualPeru();let date=today,turn='NOCHE',items=[],editing=null,records={};
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=x=>Number(x)||0, fmt=x=>n(x).toLocaleString('es-PE',{maximumFractionDigits:6}), id=()=>String(Date.now())+Math.random().toString(36).slice(2,8);
 const key=()=>date+'|'+turn;
@@ -327,3 +328,16 @@ function srPreparePrintTable(){
 }
 window.addEventListener('beforeprint',srPreparePrintTable);
 window.addEventListener('afterprint',srClearPrintTable);
+
+// V103: actualizar al cambiar de día sin perder una programación abierta.
+let srDiaObservado=today;
+function srActualizarFechaActual(){
+ const actual=fechaActualPeru();
+ if(actual===srDiaObservado)return;
+ if(date!==srDiaObservado){srDiaObservado=actual;return;}
+ if(document.querySelector('dialog[open]') || items.length){return;}
+ srDiaObservado=actual;date=actual;$('fecha').value=actual;load();
+}
+setInterval(srActualizarFechaActual,30000);
+window.addEventListener('focus',srActualizarFechaActual);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)srActualizarFechaActual();});
