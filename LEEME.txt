@@ -1,2 +1,6 @@
 V46: fórmulas de planificación D22, J, M, AD, V y W. Búsquedas locales solo para los ocho productos del ejemplo y cuartel 6, usando valores guardados del Excel. Confirmación real manual. No se automatizan referencias externas ni fórmulas auxiliares fuera del área de impresión. Verificar dosis y datos con el agrónomo. La fórmula original usa H25 para toda la OT y tanque de 2000 L. No se ha probado impresión ni Google Sheets en vivo.
 V68: selector independiente de 0 a 6 decimales HA/KG, por defecto 3; botón para redondear manualmente. No cambia el cálculo de salida total.
+
+V85: Eliminar OT con confirmación. Actualizar GOOGLE_APPS_SCRIPT.gs y publicar nueva versión de la implementación existente. Solo elimina de ORDENES_TRABAJO; no elimina programaciones importadas. El endpoint compartido no tiene autenticación individual: restringir acceso antes de usar datos de producción.
+
+V86: conserva el listado V84, botón Duplicar verde y Eliminar rojo del mismo tamaño. Actualizar Apps Script solo si aún no se publicó V85.
