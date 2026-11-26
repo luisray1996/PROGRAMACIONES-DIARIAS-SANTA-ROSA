@@ -6,3 +6,5 @@ V85: Eliminar OT con confirmación. Actualizar GOOGLE_APPS_SCRIPT.gs y publicar 
 V86: conserva el listado V84, botón Duplicar verde y Eliminar rojo del mismo tamaño. Actualizar Apps Script solo si aún no se publicó V85.
 
 V91: rótulos de las cuatro firmas inferiores ampliados, sin mover líneas de firma.
+
+V92: fecha principal ampliada a 7.5 pt y negrita en impresion y PDF.
