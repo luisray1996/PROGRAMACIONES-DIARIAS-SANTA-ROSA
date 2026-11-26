@@ -570,3 +570,27 @@
  #editor .modal-actions{position:sticky;bottom:-12px;display:grid;grid-template-columns:1fr 1fr;gap:8px;background:white;padding:10px 0 max(10px,env(safe-area-inset-bottom));margin-top:12px;z-index:3;border-top:1px solid #d4e0ec}
  #editor .modal-actions button{min-height:44px}
 }
+
+/* V102: historial en tarjetas para pantallas pequeñas. */
+@media screen and (max-width:720px){
+ #other:has(.history-table){padding:12px;overflow-wrap:normal}
+ #other:has(.history-table) h2{font-size:20px;line-height:1.2;margin:0 0 8px}
+ #other:has(.history-table) .hint{font-size:13px;line-height:1.4;margin:0 0 12px}
+ #other .history-wrap{overflow:visible;width:100%;min-width:0}
+ #other .history-table{display:block;width:100%;min-width:0;table-layout:auto}
+ #other .history-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+ #other .history-table tbody{display:grid;gap:12px;width:100%}
+ #other .history-table tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:12px;border:1px solid #b9c7d9;border-radius:10px;background:#f5f9fd}
+ #other .history-table td{display:flex;flex-direction:column;gap:4px;border:0;padding:0;min-width:0;width:auto;font-size:14px;line-height:1.35;white-space:normal;word-break:normal;overflow-wrap:normal}
+ #other .history-table td::before{font-size:11px;font-weight:700;color:#53647c}
+ #other .history-table td:nth-child(1){font-size:17px;font-weight:700;color:#123653;grid-column:1/-1;border-bottom:1px solid #d4e0ec;padding-bottom:8px}
+ #other .history-table td:nth-child(1)::before{content:'Fecha'}
+ #other .history-table td:nth-child(2)::before{content:'Turno'}
+ #other .history-table td:nth-child(3)::before{content:'Órdenes'}
+ #other .history-table td:nth-child(4){grid-column:1/-1}
+ #other .history-table td:nth-child(4)::before{content:'Último guardado'}
+ #other .history-table td:nth-child(5){grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;border-top:1px solid #d4e0ec;padding-top:10px}
+ #other .history-table td:nth-child(5) button{margin:0;width:100%;min-width:0;min-height:42px;padding:8px 5px;font-size:13px;white-space:normal;word-break:normal;overflow-wrap:normal}
+ #other .history-table button[data-open]{grid-column:1/-1;background:#0755bd;color:white;border-color:#0755bd}
+ #other .history-table button[data-remove]{color:#b91c1c;border-color:#b91c1c;background:white}
+}
