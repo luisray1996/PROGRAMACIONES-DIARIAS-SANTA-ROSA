@@ -29,11 +29,15 @@ function roundHa(v){if(v===null||!Number.isFinite(v))return "";const d=Number(el
 function roundTotal(v){if(v===null||!Number.isFinite(v))return "";const d=Number(el("otTotalDecimals").value);return (Math.round((v+Number.EPSILON)*10**d)/10**d).toFixed(d);}
 function updateProductCalc(){const auto=el('otCalcAuto').checked;for(const id of calcIds.slice(1))el(id).readOnly=auto;if(!auto)return;const b=calcNum(el('otBaseDose').value),m=calcNum(el('otMojPick').value),n=calcNum(el('otDosePick').value);el('otTankDose').value=tankFmt(b===null?null:b*10);el('otHaDose').value=roundHa(b===null||m===null?null:b*m/200);el('otTotalDose').value=roundTotal(b===null||n===null?null:b*10*n);}
 for(const id of ['otBaseDose','otDosePick','otMojPick','otAreaPick','otCuartelPick'])el(id).addEventListener('input',()=>queueMicrotask(updateProductCalc));el('otCalcAuto').onchange=updateProductCalc;
-el('otRoundBase').onclick=()=>{const v=calcNum(el('otBaseDose').value);if(v===null)return;el('otBaseDose').value=v.toFixed(Number(el('otBaseDecimals').value));updateProductCalc();};
+let baseOriginal=null, baseFormatted=null;
+function roundBaseDose(){const input=el('otBaseDose');if(input.value!==baseFormatted||baseOriginal===null)baseOriginal=calcNum(input.value);if(baseOriginal===null)return;input.value=baseOriginal.toFixed(Number(el('otBaseDecimals').value));baseFormatted=input.value;updateProductCalc();}
+el('otBaseDose').addEventListener('input',()=>{baseOriginal=calcNum(el('otBaseDose').value);baseFormatted=null;});
+el('otBaseDecimals').onchange=roundBaseDose;
+el('otRoundBase').onclick=roundBaseDose;
 el('otTankDecimals').onchange=updateProductCalc;el('otRoundTank').onclick=()=>{if(el('otCalcAuto').checked)updateProductCalc();else{const v=calcNum(el('otTankDose').value);if(v!==null)el('otTankDose').value=tankFmt(v);}};
 el('otHaDecimals').onchange=updateProductCalc;el('otRoundHa').onclick=()=>{if(el('otCalcAuto').checked)updateProductCalc();else{const v=calcNum(el('otHaDose').value);if(v!==null)el('otHaDose').value=roundHa(v);}};
 el('otTotalDecimals').onchange=updateProductCalc;el('otRoundTotal').onclick=()=>{if(el('otCalcAuto').checked)updateProductCalc();else{const v=calcNum(el('otTotalDose').value);if(v!==null)el('otTotalDose').value=roundTotal(v);}};
-function clearProductCalc(){for(const id of calcIds)el(id).value='';updateProductCalc();}
+function clearProductCalc(){baseOriginal=null;baseFormatted=null;for(const id of calcIds)el(id).value='';updateProductCalc();}
 function updateDosePick(){const n=doseCount(el('otAreaPick').value,el('otMojPick').value);el('otDosePick').value=n===null?'':n.toFixed(2);updateProductCalc();}
 for(const id of ['otAreaPick','otMojPick'])el(id).addEventListener('input',updateDosePick);
 function updateAreaPick(){const a=areaFor(el('otCuartelPick').value);el('otAreaPick').value=a===undefined?'':a.toFixed(2);updateDosePick();}
