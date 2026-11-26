@@ -24,9 +24,11 @@ function doseCount(a,m){const x=String(a).trim().replace(',','.'),y=String(m).tr
 const calcIds=['otBaseDose','otTankDose','otHaDose','otTotalDose'];
 function calcNum(v){const t=String(v??'').trim().replace(',','.');return /^\d+(?:\.\d+)?$/.test(t)&&Number.isFinite(+t)?+t:null;}
 function calcFmt(v){return v===null||!Number.isFinite(v)?'':String(Math.round(v*1000000)/1000000);}
+function roundHa(v){if(v===null||!Number.isFinite(v))return "";const d=Number(el("otHaDecimals").value);return (Math.round((v+Number.EPSILON)*10**d)/10**d).toFixed(d);}
 function roundTotal(v){if(v===null||!Number.isFinite(v))return "";const d=Number(el("otTotalDecimals").value);return (Math.round((v+Number.EPSILON)*10**d)/10**d).toFixed(d);}
-function updateProductCalc(){const auto=el('otCalcAuto').checked;for(const id of calcIds.slice(1))el(id).readOnly=auto;if(!auto)return;const b=calcNum(el('otBaseDose').value),m=calcNum(el('otMojPick').value),n=calcNum(el('otDosePick').value);el('otTankDose').value=calcFmt(b===null?null:b*10);el('otHaDose').value=calcFmt(b===null||m===null?null:b*m/200);el('otTotalDose').value=roundTotal(b===null||n===null?null:b*10*n);}
+function updateProductCalc(){const auto=el('otCalcAuto').checked;for(const id of calcIds.slice(1))el(id).readOnly=auto;if(!auto)return;const b=calcNum(el('otBaseDose').value),m=calcNum(el('otMojPick').value),n=calcNum(el('otDosePick').value);el('otTankDose').value=calcFmt(b===null?null:b*10);el('otHaDose').value=roundHa(b===null||m===null?null:b*m/200);el('otTotalDose').value=roundTotal(b===null||n===null?null:b*10*n);}
 for(const id of ['otBaseDose','otDosePick','otMojPick','otAreaPick','otCuartelPick'])el(id).addEventListener('input',()=>queueMicrotask(updateProductCalc));el('otCalcAuto').onchange=updateProductCalc;
+el('otHaDecimals').onchange=updateProductCalc;el('otRoundHa').onclick=()=>{if(el('otCalcAuto').checked)updateProductCalc();else{const v=calcNum(el('otHaDose').value);if(v!==null)el('otHaDose').value=roundHa(v);}};
 el('otTotalDecimals').onchange=updateProductCalc;el('otRoundTotal').onclick=()=>{if(el('otCalcAuto').checked)updateProductCalc();else{const v=calcNum(el('otTotalDose').value);if(v!==null)el('otTotalDose').value=roundTotal(v);}};
 function clearProductCalc(){for(const id of calcIds)el(id).value='';updateProductCalc();}
 function updateDosePick(){const n=doseCount(el('otAreaPick').value,el('otMojPick').value);el('otDosePick').value=n===null?'':n.toFixed(2);updateProductCalc();}
@@ -45,7 +47,7 @@ const put=(k,v)=>{if(manualOverrides.has(k))return;values[k]=String(v??'');conte
 const moj=n('D21'),cap=2000;
 for(let r=25;r<=37;r++){if(changed==='B'+r){const a=excelCatalog[String(values[changed]||'').trim().toUpperCase()];for(const k of ['E','S','T','U','AA','AC','AE'])put(k+r,a?.[k]??'');}if(changed==='G'+r)put('H'+r,excelAreas[String(values[changed]).trim()]??'');}
 const area=n('H25');const doses=manualOverrides.has('D22')?n('D22'):moj!==null&&area!==null&&moj>0&&area>0?Math.ceil((area*moj/cap)*10-1e-10)/10:null;put('D22',fmt(doses));
-for(let r=25;r<=37;r++){const active=String(values['B'+r]||'').trim()!=='';const l=n('L'+r),m=l===null?null:l*10;const valid=active&&l!==null&&l>=0;put('M'+r,valid?fmt(m):'');put('J'+r,valid&&moj!==null&&moj>0?fmt(moj*m/cap):'');put('AD'+r,valid&&doses!==null?roundTotal(m*doses):'');for(const k of ['V','W'])put(k+r,active?values.C4:'');
+for(let r=25;r<=37;r++){const active=String(values['B'+r]||'').trim()!=='';const l=n('L'+r),m=l===null?null:l*10;const valid=active&&l!==null&&l>=0;put('M'+r,valid?fmt(m):'');put('J'+r,valid&&moj!==null&&moj>0?roundHa(moj*m/cap):'');put('AD'+r,valid&&doses!==null?roundTotal(m*doses):'');for(const k of ['V','W'])put(k+r,active?values.C4:'');
 // Confirmation is a proposed copy only; never overwrite manually entered actual data.
 
 }
