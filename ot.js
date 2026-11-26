@@ -62,7 +62,7 @@ function addCatalogProduct(){
  */
  if(row===null){msg.textContent='No hay filas vacías. La OT admite 13 productos.';return;}
  const put=(k,v)=>{const e=cell(k);if(e){e.textContent=String(v??'');values[k]=e.textContent;manualOverrides.add(k);}};
- const name=product?.name||originalProduct;const wasEditing=editingRow!==null;put('B'+row,name);put('E'+row,el('otIngredientPick').value);put('G'+row,cuartel);put('H'+row,area);
+ const name=product?.name||originalProduct;const wasEditing=editingRow!==null;put('B'+row,name);put('E'+row,el('otIngredientPick').value);put('G'+row,cuartel);put('H'+row,area);put('I'+row,'4.5 (3° LENTA)');
  recalc('B'+row);recalc('G'+row);
  msg.textContent=name+' — Cuartel '+cuartel+' — '+(area===''?'Hectáreas sin dato; completar manualmente':area+' ha')+(wasEditing?' — actualizado en fila ':' — agregado en fila ')+(row-24)+' de 13.';
  resetProductEdit();refreshPositions();input.value='';input.focus();
