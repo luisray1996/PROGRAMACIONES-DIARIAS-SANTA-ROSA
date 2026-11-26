@@ -4,3 +4,5 @@ V68: selector independiente de 0 a 6 decimales HA/KG, por defecto 3; botón para
 V85: Eliminar OT con confirmación. Actualizar GOOGLE_APPS_SCRIPT.gs y publicar nueva versión de la implementación existente. Solo elimina de ORDENES_TRABAJO; no elimina programaciones importadas. El endpoint compartido no tiene autenticación individual: restringir acceso antes de usar datos de producción.
 
 V86: conserva el listado V84, botón Duplicar verde y Eliminar rojo del mismo tamaño. Actualizar Apps Script solo si aún no se publicó V85.
+
+V91: rótulos de las cuatro firmas inferiores ampliados, sin mover líneas de firma.
