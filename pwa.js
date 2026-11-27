@@ -9,5 +9,5 @@
  if(prompt){const p=prompt;prompt=null;try{await p.prompt();await p.userChoice;}catch(e){console.warn(e);}return;}
  alert('Android: abre el menú ⋮ de Chrome y elige Instalar aplicación o Añadir a pantalla de inicio. Windows: en Chrome o Edge busca Instalar aplicación en la barra de direcciones o en el menú. Si ya está instalada, ábrela desde su icono.');
  });
- if('serviceWorker' in navigator && window.isSecureContext) navigator.serviceWorker.register('./sw.js').catch(e=>console.warn('PWA:',e));
+ if('serviceWorker' in navigator && window.isSecureContext) navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(r=>r.update()).catch(e=>console.warn('PWA:',e));
 })();
