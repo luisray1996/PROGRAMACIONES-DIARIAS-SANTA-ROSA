@@ -1,0 +1,6 @@
+1. Hacer una copia completa de Google Sheets antes de actualizar.
+2. En Apps Script reemplazar el código con GOOGLE_APPS_SCRIPT.gs. Guardar.
+3. Ejecutar configurarUsuariosV110 desde el editor. Autorizar si solicita permisos. En el registro de ejecución aparecen las tres claves aleatorias. Guardarlas en un gestor de contraseñas privado; no compartir el registro ni subir las claves a GitHub.
+4. Implementar > Gestionar implementaciones > editar implementación actual > Nueva versión > Implementar. Mantener la URL existente. Desactivar cualquier implementación anterior que permita acceso sin autenticación.
+5. Publicar los archivos web en GitHub Pages. ADMIN elige el propietario en el selector superior. Los registros antiguos sin propietario se consideran ADMIN. Las OT tienen correlativo global. No hay cambio de contraseña desde la web en esta versión.
+6. Probar con datos de prueba: iniciar cada sesión, guardar misma fecha/turno, comprobar separación, consultar ambos desde ADMIN, cerrar sesión. No usar datos reales hasta validar. Sesiones en memoria, se pierden al recargar y caducan hasta en 6 horas. No hay persistencia de datos privados nueva en localStorage.

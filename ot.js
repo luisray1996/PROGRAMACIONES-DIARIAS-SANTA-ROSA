@@ -14,7 +14,7 @@ el("otFieldValue").oninput=e=>{const k=e.target.dataset.target;if(!k)return;cons
 const safe=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function repairColosoValues(v){if(!v||typeof v!=='object')return v;for(let n=25;n<=37;n++){if(String(v['B'+n]??'').trim().replace(/\s+/g,' ').toUpperCase()==='COLOSO 50 SG')v['AE'+n]='KG';}return v;}
 function repairColosoResponse(data){if(Array.isArray(data))data.forEach(repairColosoResponse);else if(data&&data.values)repairColosoValues(data.values);return data;}
-async function api(q){const r=await fetch(SR_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(q)});const j=await r.json();if(j.error)throw Error(j.error.message);return repairColosoResponse(j.data)}
+async function api(q){const r=await fetch(SR_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(srSecure(q))});const j=await r.json();if(j.error)throw Error(j.error.message);return repairColosoResponse(j.data)}
 function collect(){content.querySelectorAll('[data-cell]').forEach(x=>{values[x.dataset.cell]=x.textContent});recalc()}
 const model=Object.fromEntries(OT_MODEL.flat().map(c=>[c.k,c.v]));
 const field=(k,label,def='')=>`<label class="ot-field"><b>${safe(label)}</b><div contenteditable="true" data-cell="${k}">${safe(values[k]??def)}</div></label>`;

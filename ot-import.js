@@ -2,7 +2,7 @@
 (()=>{
 const el=id=>document.getElementById(id);
 const iso=v=>{const s=String(v||'').trim();const m=s.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})$/);return m?`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`:s.slice(0,10)};
-async function request(q){const r=await fetch(SR_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(q)});const j=await r.json();if(j.error)throw Error(j.error.message);return j.data;}
+async function request(q){const r=await fetch(SR_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(srSecure(q))});const j=await r.json();if(j.error)throw Error(j.error.message);return j.data;}
 const msg=t=>el('importStatus').textContent=t;
 let seq=0;
 function reset(){seq++;el('importDate').value=date;el('importNumber').value='';el('importChoice').replaceChildren(new Option('Selecciona una OT',''));msg('');}

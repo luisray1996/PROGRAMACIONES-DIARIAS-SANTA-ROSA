@@ -5,7 +5,7 @@ const today=fechaActualPeru();let date=today,turn='NOCHE',items=[],editing=null,
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const n=x=>Number(x)||0, fmt=x=>n(x).toLocaleString('es-PE',{maximumFractionDigits:6}), id=()=>String(Date.now())+Math.random().toString(36).slice(2,8);
 const key=()=>date+'|'+turn;
-let srCurrentUserId="compartido";
+let srCurrentUserId=null;
 let srCloudSeq=0;
 const userStorageKey=()=>srCurrentUserId?KEY+srCurrentUserId:null;
 // Cálculos verificados contra Libro3 (1).xlsx: D22=CEILING(H25*D21/M24,0.1); M25=L25*10; AD25=M25*D22.
@@ -64,7 +64,7 @@ const demo=[
  {stage:'PRODUCCIÓN',ot:'7596',cuartel:'28',ha:5.33,ddc:142,moj:800,fen:'LARVAS',reingreso:'4 Hrs',obs:'',products:[{name:'BTK-CROPS',order:1,dose:.5,dose200:2,control:'Gusano cogollero',lt:10.66}]}
 ].map(x=>({...x,uid:id(),conf:'PENDIENTE',inicio:'',termino:''}));
 function read(){records={};const k=userStorageKey();if(!k)return;try{records=JSON.parse(localStorage.getItem(k)||'{}');if(!records||Array.isArray(records)||typeof records!=='object')records={}}catch{records={}}}
-function persistUserCache(){const k=userStorageKey();if(k)localStorage.setItem(k,JSON.stringify(records))}
+function persistUserCache(){const k=userStorageKey();/* V110: no persistir datos privados en el navegador */}
 function load(){srCloudSeq++;items=[];render();if(window.srAuthReady)cloudLoad()}
 function notify(msg){$('notice').textContent=msg;setTimeout(()=>{if($('notice').textContent===msg)$('notice').textContent=''},5000)}
 async function save(){if(!window.srAuthReady||!srCurrentUserId)return alert('Conexión no disponible.');const snapshot={date,turn,items:structuredClone(items),updated:new Date().toISOString()};try{const {error}=await window.srClient.from('PROGRAMACIONES').upsert({fecha:date,turno:turn,datos:{items:snapshot.items},actualizado_en:new Date().toISOString()},{onConflict:'fecha,turno'});if(error)throw error;records[key()]=snapshot;persistUserCache();notify('✓ Guardado en Google Sheets correctamente.')}catch(e){alert('No se guardó en Google Sheets: '+e.message)}}
@@ -295,9 +295,9 @@ $('reprogramTop').onclick=openReprogramDialog;$('reprogramForm').addEventListene
 
 // V15: Autenticación y sincronización de programaciones en Google Sheets.
 const SR_URL='https://script.google.com/macros/s/AKfycbw87mfuZ32GOTdisER6_Cp3uMfyhkmuO5lilQuM8OKCrJn2dE_-xgnbJF97uODzDdRt/exec';
-window.srAuthReady=true;
+window.srAuthReady=false;
 // Adaptador de almacenamiento Google Sheets.
-window.srClient={from(){const q={op:'select',filters:{}};const chain={select(){return chain},eq(k,v){q.filters[k]=v;return chain},order(){return chain},maybeSingle(){q.single=true;return chain},upsert(v){q.op='upsert';q.value=v;return chain},update(v){q.op='update';q.value=v;return chain},delete(){q.op='delete';return chain},then(resolve,reject){return fetch(SR_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(q),redirect:'follow'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).catch(e=>({data:null,error:{message:e.message}})).then(resolve,reject)}};return chain}};
+window.srClient={from(){const q={op:'select',filters:{}};const chain={select(){return chain},eq(k,v){q.filters[k]=v;return chain},order(){return chain},maybeSingle(){q.single=true;return chain},upsert(v){q.op='upsert';q.value=v;return chain},update(v){q.op='update';q.value=v;return chain},delete(){q.op='delete';return chain},then(resolve,reject){return fetch(SR_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(srSecure(q)),redirect:'follow'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).catch(e=>({data:null,error:{message:e.message}})).then(resolve,reject)}};return chain}};
 async function cloudLoad(){
  if(!window.srAuthReady||!srCurrentUserId)return;const seq=++srCloudSeq, wanted=key(), userId=srCurrentUserId;
  const {data,error}=await window.srClient.from('PROGRAMACIONES').select('fecha,turno,datos,actualizado_en').eq('fecha',date).eq('turno',turn).maybeSingle();
@@ -306,7 +306,7 @@ async function cloudLoad(){
  items=structuredClone(data?.datos?.items||[]);render();
  if(data){records[wanted]={date,turn,items:structuredClone(items),updated:data.actualizado_en};persistUserCache()}else{delete records[wanted];persistUserCache()}
 }
-read();cloudLoad();
+window.srStart110=()=>{srCurrentUserId=srScope110();window.srAuthReady=true;records={};load();};
 
 /* V20: conservar exactamente los rowspan del diseño al imprimir.
    La V19 convertía celdas combinadas en casilleros vacíos y deformaba la tabla. */
