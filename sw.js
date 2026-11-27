@@ -1,4 +1,4 @@
-// V112
+// V113
 // Online-only: never cache orders, API responses or stale application code.
 self.addEventListener('install',()=>self.skipWaiting());
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const k of await caches.keys()){if(/santa|sr-pwa/i.test(k))await caches.delete(k);}await self.clients.claim();})()));
